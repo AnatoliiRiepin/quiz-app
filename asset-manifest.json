@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/quiz-app/static/css/main.0dda6c2b.css",
+    "main.js": "/quiz-app/static/js/main.83e5bd74.js",
+    "static/media/Art.jpg": "/quiz-app/static/media/Art.c54d97f7c6dd47508fa2.jpg",
+    "static/media/History.jpg": "/quiz-app/static/media/History.660f0975c5cb0030492c.jpg",
+    "static/media/Sports.jpg": "/quiz-app/static/media/Sports.0c3eb4f31a403a8e3b5d.jpg",
+    "static/media/Animals.jpg": "/quiz-app/static/media/Animals.105b146d81e6a3887f93.jpg",
+    "static/media/Politics.jpg": "/quiz-app/static/media/Politics.5cd9b9b495e66a4282dd.jpg",
+    "static/media/ScienceNature.jpg": "/quiz-app/static/media/ScienceNature.bd598b6ecf496258a554.jpg",
+    "static/media/GeneralKnowledge.jpg": "/quiz-app/static/media/GeneralKnowledge.9b1664be2b6f24729fec.jpg",
+    "static/media/Mythology.jpg": "/quiz-app/static/media/Mythology.41e48757e44df7238bb7.jpg",
+    "static/media/sun.svg": "/quiz-app/static/media/sun.4d47962acd6c83e7e7aca592ec39545f.svg",
+    "static/media/moon.svg": "/quiz-app/static/media/moon.829f022e764b1d37016e364c5447dfdb.svg",
+    "static/media/gitHub.svg": "/quiz-app/static/media/gitHub.db1e3cfa3aa61658d837d82e113dc1fe.svg",
+    "static/media/twitter.svg": "/quiz-app/static/media/twitter.d4b0a40866d7b735834b96db6728afc1.svg",
+    "static/media/linkedIn.svg": "/quiz-app/static/media/linkedIn.c05a2ae5b158581b0f27510e1d79e379.svg",
+    "index.html": "/quiz-app/index.html",
+    "main.0dda6c2b.css.map": "/quiz-app/static/css/main.0dda6c2b.css.map",
+    "main.83e5bd74.js.map": "/quiz-app/static/js/main.83e5bd74.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0dda6c2b.css",
+    "static/js/main.83e5bd74.js"
+  ]
+}

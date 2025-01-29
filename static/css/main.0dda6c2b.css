@@ -1,0 +1,2 @@
+.dark-mode-btn{background-color:#272727;border-radius:50px;display:flex;height:26px;justify-content:space-between;order:9;padding:5px;position:relative;width:51px}.dark-mode-btn:before{background-color:#fff;border-radius:50%;content:"";display:block;height:24px;left:1px;position:absolute;top:1px;transition:left .2s ease-in;width:24px}.dark-mode-btn--active:before{left:26px}.dark-mode-btn__icon{position:relative;z-index:9}
+/*# sourceMappingURL=main.0dda6c2b.css.map*/
