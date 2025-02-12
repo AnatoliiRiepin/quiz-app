@@ -24,11 +24,12 @@ const QuizForm = ({ selectedThemeUrl }) => {
             return;
         }
 
-        const storedNames = JSON.parse(localStorage.getItem('userNames')) || [];
-        if (!storedNames.includes(userName)) {
-            storedNames.push(userName);
-            localStorage.setItem('userNames', JSON.stringify(storedNames));
+        const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
+        const userIndex = storedUsers.findIndex(user => user.name === userName);
+        if (userIndex === -1) {
+            storedUsers.push({ name: userName, winRate: 0, timeSpent: 0 });
         }
+        localStorage.setItem('users', JSON.stringify(storedUsers));
 
         const quizUrl = `/quiz?url=${encodeURIComponent(selectedThemeUrl)}
             &questions=${numQuestions}

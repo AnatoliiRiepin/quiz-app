@@ -9,6 +9,7 @@ export const Quiz = () => {
     const numQuestions = Number(queryParams.get('questions')?.trim()) || 5;
     const allowSkipping = queryParams.get('skip')?.trim() === 'true';
     const showTimer = queryParams.get('timer')?.trim() === 'true';
+    const userName = queryParams.get('name')?.trim();
 
     const [questions, setQuestions] = useState([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -99,6 +100,21 @@ export const Quiz = () => {
             }
         }
     }, [allowSkipping, currentQuestionIndex, questions.length, skippedQuestions]);
+
+    useEffect(() => {
+        if (isQuizFinished) {
+            const totalTime = ((quizEndTime - quizStartTime) / 1000).toFixed(2);
+            const winRate = ((score / questions.length) * 100).toFixed(2);
+
+            const storedUsers = JSON.parse(localStorage.getItem('users')) || []; // Fetch 'users' from local storage
+            const userIndex = storedUsers.findIndex(user => user.name === userName); // Find the user by name
+            if (userIndex !== -1) {
+                storedUsers[userIndex].winRate = winRate; // Update win rate
+                storedUsers[userIndex].timeSpent = totalTime; // Update time spent
+                localStorage.setItem('users', JSON.stringify(storedUsers)); // Store updated users
+            }
+        }
+    }, [isQuizFinished, quizEndTime, quizStartTime, score, questions.length, userName]);
 
     if (isQuizFinished) {
         const totalTime = ((quizEndTime - quizStartTime) / 1000).toFixed(2);

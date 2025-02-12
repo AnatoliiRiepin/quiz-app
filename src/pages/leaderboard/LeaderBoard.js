@@ -1,21 +1,28 @@
 import React, { useEffect, useState } from 'react';
 
 export const LeaderBoard = () => {
-    const [userNames, setUserNames] = useState([]);
+    const [users, setUsers] = useState([]);
 
     useEffect(() => {
-        const storedNames = JSON.parse
-            (localStorage.getItem('userNames')) || [];
-        setUserNames(storedNames);
+        const storedUsers = JSON.parse
+            (localStorage.getItem('users')) || [];
+        const sortedUsers = storedUsers.sort((a, b) => {
+            if (b.winRaate === a.winRate) {
+                return a.timeSpent - b.timeSpent;
+            }
+            return b.winRate - a.winRate;
+        })
+        setUsers(sortedUsers);
     }, []);
     return (
         <div>
             <h2>LeaderBoard</h2>
             <ol>
-                {userNames.map((name, index) => (
+                {users.map((user, index) => (
                     <li
                         key={index}>
-                        {name}
+                        {user.name} - Win Rate: {user.winRate}%
+                        - Time Spent: {user.timeSpent} seconds
                     </li>
                 ))}
             </ol>
