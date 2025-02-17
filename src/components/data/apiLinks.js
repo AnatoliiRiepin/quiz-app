@@ -7,7 +7,7 @@ import History from './../img/History.jpg';
 import Politics from './../img/Politics.jpg';
 import Art from './../img/Art.jpg';
 import Animals from './../img/Animals.jpg';
-
+//API links for different categories
 
 const apiLinks = [
     {

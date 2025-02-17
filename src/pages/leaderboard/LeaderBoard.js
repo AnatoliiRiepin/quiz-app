@@ -6,6 +6,7 @@ export const LeaderBoard = () => {
     useEffect(() => {
         const storedUsers = JSON.parse
             (localStorage.getItem('users')) || [];
+        // Sort users by winRate (descending) and timeSpent (ascending if winRate is equal)
         const sortedUsers = storedUsers.sort((a, b) => {
             if (b.winRaate === a.winRate) {
                 return a.timeSpent - b.timeSpent;
@@ -13,11 +14,12 @@ export const LeaderBoard = () => {
             return b.winRate - a.winRate;
         })
         setUsers(sortedUsers);
-    }, []);
+    }, []); // Empty dependency array ensures this runs only once on mount
     return (
         <div>
             <h2>LeaderBoard</h2>
             <ol>
+                {/* Render the sorted users in a list */}
                 {users.map((user, index) => (
                     <li
                         key={index}>
