@@ -7,7 +7,7 @@ import { QuestionsAndSuggestions } from "./pages/questionsSuggestions/QuestionsA
 import { Quiz } from "./pages/quiz/Quiz";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/login/loginPage";
-import SignUpPage from "./pages/signup/SignUpPage";
+import SignUpPage from "./pages/signup/signUpPage";
 
 function App() {
   return (
@@ -21,7 +21,7 @@ function App() {
           <Route path="/questionsSuggestions" element={<QuestionsAndSuggestions />} />
           <Route path="/quiz" element={<Quiz />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/sign-up" element={<SignUpPage />} />
         </Routes>
         <Footer />
       </Router>
