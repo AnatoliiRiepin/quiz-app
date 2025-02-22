@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import google from './../../components/icons/google-icon-svgrepo-com.svg';
 
 const SignUpPage = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -29,8 +30,11 @@ const SignUpPage = () => {
                     <input type="checkbox" required />
                 </label>
                 <button type="submit">Sign Up</button>
-                <button type="button">
-                    <img src="path/to/google-icon.png" alt="Google Icon" />
+                <button type="button"
+                    style={{ display: 'flex', alignItems: 'center' }}>
+                    <img src={google}
+                        alt="Google Icon"
+                        style={{ width: '16px', height: '16px', marginRight: '8px' }} />
                     Sign up with Google
                 </button>
                 <div>

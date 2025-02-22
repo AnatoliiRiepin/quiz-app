@@ -7,7 +7,7 @@ import { QuestionsAndSuggestions } from "./pages/questionsSuggestions/QuestionsA
 import { Quiz } from "./pages/quiz/Quiz";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/login/loginPage";
-import SignUpPage from "./pages/signup/signUpPage";
+import SignUpPage from "./pages/signup/SignUpPage";
 
 function App() {
   return (
