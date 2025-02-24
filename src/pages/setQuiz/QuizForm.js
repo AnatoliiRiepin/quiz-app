@@ -4,38 +4,26 @@ const QuizForm = ({ selectedThemeUrl }) => {
     const [numQuestions, setNumQuestions] = useState(5);
     const [allowSkipping, setAllowSkipping] = useState(false);
     const [showTimer, setShowTimer] = useState(false);
-    const [userName, setUserName] = useState('');
 
+    // Function to validate and start the quiz
     const handleStartQuiz = (e) => {
         if (!selectedThemeUrl) {
             e.preventDefault();
             alert('Please select a theme.');
             return;
         }
+        // Validate number of questions
         if (numQuestions < 5 || numQuestions > 10) {
             e.preventDefault();
             alert('Number of questions must be between 5 and 10.');
             return;
         }
 
-        if (!userName.trim()) {
-            e.preventDefault();
-            alert('Please enter your name.');
-            return;
-        }
-
-        const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
-        const userIndex = storedUsers.findIndex(user => user.name === userName);
-        if (userIndex === -1) {
-            storedUsers.push({ name: userName, winRate: 0, timeSpent: 0 });
-        }
-        localStorage.setItem('users', JSON.stringify(storedUsers));
-
+        // Construct the quiz URL with user-selected parameters
         const quizUrl = `/quiz?url=${encodeURIComponent(selectedThemeUrl)}
             &questions=${numQuestions}
             &skip=${allowSkipping ? 'true' : 'false'}
-            &timer=${showTimer}
-            &name=${encodeURIComponent(userName)}`;
+            &timer=${showTimer}`;
 
         window.location.href = quizUrl;
     };
@@ -67,16 +55,6 @@ const QuizForm = ({ selectedThemeUrl }) => {
                     checked={showTimer}
                     onChange={(e => setShowTimer(e.target.checked))}
                 />
-            </label>
-            <label>
-                Enter Your Name:
-                <input
-                    type='text'
-                    value={userName}
-                    onChange={(e) => setUserName(e.target.value)}
-                    required
-                >
-                </input>
             </label>
             <button type="button" onClick={handleStartQuiz}>
                 Start Quiz

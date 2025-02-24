@@ -22,6 +22,7 @@ export const Quiz = () => {
     const [elapsedTime, setElapsedTime] = useState(0);
     const [isCurrentQuestionSkipped, setIsCurrentQuestionSkipped] = useState(false);
 
+    // Format time for display
     const formatTime = (totalSeconds) => {
         const hours = Math.floor(totalSeconds / 3600);
         const minutes = Math.floor((totalSeconds % 3600) / 60);
@@ -30,7 +31,7 @@ export const Quiz = () => {
         :${minutes.toString().padStart(2, '0')}
         :${seconds.toString().padStart(2, '0')}`;
     };
-
+    // Fetch questions from API on component mount
     useEffect(() => {
         const fetchQuestions = async () => {
             try {
@@ -45,6 +46,7 @@ export const Quiz = () => {
         fetchQuestions();
     }, [apiUrl, numQuestions]);
 
+    // Timer to track quiz duration
     useEffect(() => {
         let timer;
         if (quizStartTime && !isQuizFinished) {
@@ -55,6 +57,7 @@ export const Quiz = () => {
         return () => clearInterval(timer);
     }, [quizStartTime, isQuizFinished]);
 
+    // Handle moving to the next question by using useCallback
     const handleNextQuestion = useCallback(() => {
         if (selectedAnswer) {
             if (currentQuestionIndex < questions.length - 1) {
@@ -62,18 +65,21 @@ export const Quiz = () => {
                 setSelectedAnswer(null);
                 setIsCurrentQuestionSkipped(false);
             } else if (skippedQuestions.length > 0) {
+                 // Go back to skipped questions if any exist
                 const nextSkippedIndex = skippedQuestions[0];
                 setSkippedQuestions((prev) => prev.slice(1));
                 setCurrentQuestionIndex(nextSkippedIndex);
                 setSelectedAnswer(null);
                 setIsCurrentQuestionSkipped(true);
             } else {
+                // End quiz if no more questions
                 setIsQuizFinished(true);
                 setQuizEndTime(Date.now());
             }
         }
     }, [selectedAnswer, currentQuestionIndex, questions.length, skippedQuestions]);
 
+    // Handle selecting an answer
     const handleAnswerSection = (answer) => {
         setSelectedAnswer(answer);
         if (answer === questions[currentQuestionIndex]?.correct_answer) {
@@ -81,6 +87,7 @@ export const Quiz = () => {
         }
     };
 
+    // Handle skipping a question by using useCallback
     const handleSkipQuestion = useCallback(() => {
         if (allowSkipping) {
             setSkippedQuestions((prev) => [...prev, currentQuestionIndex]);
@@ -101,21 +108,23 @@ export const Quiz = () => {
         }
     }, [allowSkipping, currentQuestionIndex, questions.length, skippedQuestions]);
 
+    // Store quiz results in localStorage
     useEffect(() => {
         if (isQuizFinished) {
             const totalTime = ((quizEndTime - quizStartTime) / 1000).toFixed(2);
             const winRate = ((score / questions.length) * 100).toFixed(2);
 
             const storedUsers = JSON.parse(localStorage.getItem('users')) || []; // Fetch 'users' from local storage
-            const userIndex = storedUsers.findIndex(user => user.name === userName); // Find the user by name
+            const userIndex = storedUsers.findIndex(user => user.name === userName); 
             if (userIndex !== -1) {
-                storedUsers[userIndex].winRate = winRate; // Update win rate
-                storedUsers[userIndex].timeSpent = totalTime; // Update time spent
-                localStorage.setItem('users', JSON.stringify(storedUsers)); // Store updated users
+                storedUsers[userIndex].winRate = winRate; 
+                storedUsers[userIndex].timeSpent = totalTime; 
+                localStorage.setItem('users', JSON.stringify(storedUsers)); 
             }
         }
     }, [isQuizFinished, quizEndTime, quizStartTime, score, questions.length, userName]);
 
+    // Display quiz results when quiz is finished
     if (isQuizFinished) {
         const totalTime = ((quizEndTime - quizStartTime) / 1000).toFixed(2);
         return (
