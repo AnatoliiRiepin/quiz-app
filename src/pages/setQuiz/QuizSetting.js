@@ -4,9 +4,9 @@ import apiLinks from '../../components/data/apiLinks';
 import ThemeSelector from './ThemeSelector';
 
 export const QuizSetting = () => {
-    return (
-        <div>
-            <ThemeSelector themes={apiLinks} />
-        </div>
-    );
+  return (
+    <div>
+      <ThemeSelector themes={apiLinks} />
+    </div>
+  );
 };

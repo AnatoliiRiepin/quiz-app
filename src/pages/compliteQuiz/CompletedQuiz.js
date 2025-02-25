@@ -1,7 +1,5 @@
-import React from 'react'
+import React from 'react';
 
 export const CompletedQuiz = () => {
-    return (
-        <div>CompletedQuiz</div>
-    )
-}
+  return <div>CompletedQuiz</div>;
+};
