@@ -3,6 +3,8 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   sendEmailVerification,
+  setPersistence,
+  browserLocalPersistence,
   GoogleAuthProvider,
   signInWithPopup,
 } from 'firebase/auth';
@@ -18,6 +20,7 @@ const SignUpPage = () => {
     e.preventDefault();
     const auth = getAuth();
     try {
+      await setPersistence(auth, browserLocalPersistence);
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
@@ -34,6 +37,7 @@ const SignUpPage = () => {
     const auth = getAuth();
     const provider = new GoogleAuthProvider();
     try {
+      await setPersistence(auth, browserLocalPersistence);
       const result = await signInWithPopup(auth, provider);
       setMessage(`Sign up successful. Welcome, ${result.user.displayName}!`);
     } catch (error) {
@@ -78,19 +82,12 @@ const SignUpPage = () => {
       <button
         type="button"
         onClick={handleGoogleSignUp}
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-        }}
+        style={{ display: 'flex', alignItems: 'center' }}
       >
         <img
           src={google}
           alt="Google Icon"
-          style={{
-            width: '16px',
-            height: '16px',
-            marginRight: '8px',
-          }}
+          style={{ width: '16px', height: '16px', marginRight: '8px' }}
         />
         Sign up with Google
       </button>

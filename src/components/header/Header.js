@@ -1,7 +1,27 @@
+import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import BtnDarkMode from '../btnDarkMode/BtnDarkMode';
 
 function Header() {
+  const [user, setUser] = useState(null);
+  const auth = getAuth();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe();
+  }, [auth]);
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      setUser(null);
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
   return (
     <header>
       <div>
@@ -23,12 +43,21 @@ function Header() {
             </NavLink>
           </li>
         </ul>
-        <NavLink to="/sign-up">
-          <button>Sign In</button>
-        </NavLink>
-        <NavLink to="/login">
-          <button>Login</button>
-        </NavLink>
+        {user ? (
+          <div>
+            <span>{user.displayName || user.email}</span>
+            <button onClick={handleLogout}>Logout</button>
+          </div>
+        ) : (
+          <div>
+            <NavLink to="/sign-up">
+              <button>Sign In</button>
+            </NavLink>
+            <NavLink to="/login">
+              <button>Login</button>
+            </NavLink>
+          </div>
+        )}
       </div>
     </header>
   );

@@ -1,50 +1,65 @@
-import React, { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "./../../utils/firebase";
-import google from "./../../components/icons/google-icon-svgrepo-com.svg";
+import React, { useState } from 'react';
+import {
+  signInWithEmailAndPassword,
+  setPersistence,
+  browserLocalPersistence,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from 'firebase/auth';
+import { auth } from './../../utils/firebase';
+import google from './../../components/icons/google-icon-svgrepo-com.svg';
 
 const LoginPage = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const userCredential =
-        await signInWithEmailAndPassword(
-          auth,
-          email,
-          password
-        );
+      await setPersistence(auth, browserLocalPersistence);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password,
+      );
       if (userCredential.user.emailVerified) {
-        setMessage("Login successful.");
+        setMessage('Login successful.');
         // Redirect to the desired page
       } else {
-        setMessage(
-          "Please verify your email before logging in."
-        );
+        setMessage('Please verify your email before logging in.');
       }
     } catch (error) {
       switch (error.code) {
-        case "auth/invalid-email":
-          setMessage("Invalid email address.");
+        case 'auth/invalid-email':
+          setMessage('Invalid email address.');
           break;
-        case "auth/user-disabled":
-          setMessage("User account is disabled.");
+        case 'auth/user-disabled':
+          setMessage('User account is disabled.');
           break;
-        case "auth/user-not-found":
-          setMessage("No user found with this email.");
+        case 'auth/user-not-found':
+          setMessage('No user found with this email.');
           break;
-        case "auth/wrong-password":
-          setMessage("Incorrect password.");
+        case 'auth/wrong-password':
+          setMessage('Incorrect password.');
           break;
         default:
           setMessage(`Error: ${error.message}`);
           break;
       }
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      await setPersistence(auth, browserLocalPersistence);
+      const result = await signInWithPopup(auth, provider);
+      setMessage(`Login successful. Welcome, ${result.user.displayName}!`);
+    } catch (error) {
+      setMessage(`Error: ${error.message}`);
     }
   };
 
@@ -73,35 +88,29 @@ const LoginPage = () => {
         <label>
           Password:
           <input
-            type={showPassword ? "text" : "password"}
+            type={showPassword ? 'text' : 'password'}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <button
-            type="button"
-            onClick={() => setShowPassword(!showPassword)}
-          >
-            {showPassword ? "Hide" : "Show"}
+          <button type="button" onClick={() => setShowPassword(!showPassword)}>
+            {showPassword ? 'Hide' : 'Show'}
           </button>
-        </label>
-        <label>
-          Remember me:
-          <input type="checkbox" />
         </label>
         <button type="submit">Login</button>
         {message && <p>{message}</p>}
         <button
           type="button"
-          style={{ display: "flex", alignItems: "center" }}
+          onClick={handleGoogleLogin}
+          style={{ display: 'flex', alignItems: 'center' }}
         >
           <img
             src={google}
             alt="Google Icon"
             style={{
-              width: "16px",
-              height: "16px",
-              marginRight: "8px",
+              width: '16px',
+              height: '16px',
+              marginRight: '8px',
             }}
           />
           Sign in with Google
@@ -110,9 +119,7 @@ const LoginPage = () => {
           <a href="/forgot-password">Forgot password?</a>
         </div>
         <div>
-          <a href="/sign-up">
-            Don't have an account? Sign up
-          </a>
+          <a href="/sign-up">Don't have an account? Sign up</a>
         </div>
       </form>
     </div>
